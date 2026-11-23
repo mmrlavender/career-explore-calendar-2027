@@ -1,0 +1,669 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>__TITLE__</title>
+<style>
+:root{ --ink:#1f2a24; --sub:#5b625c; --line:#ddd6c6; --paper:#fffdf8; --green:#0F3D2E; --warm:#B4553C; }
+*{ box-sizing:border-box; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+html,body{ margin:0; padding:0; }
+body{ background:#f2efe6; color:var(--ink); font-family:"Microsoft YaHei","PingFang SC","Noto Sans CJK SC",sans-serif; line-height:1.7; }
+.hd{ background:var(--green); color:#fff; padding:26px 28px 22px; }
+.hd .brand{ font-size:12px; letter-spacing:2px; opacity:.8; }
+.hd h1{ margin:6px 0 8px; font-size:24px; letter-spacing:.5px; }
+.hd .lead{ margin:0; font-size:13px; line-height:1.8; max-width:900px; opacity:.92; }
+.hud{ display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-top:16px; font-size:12.5px; }
+.hud span{ background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.25); border-radius:999px; padding:4px 12px; }
+.hud button{ font-family:inherit; font-size:12.5px; padding:5px 14px; border-radius:999px; border:1px solid rgba(255,255,255,.5); background:transparent; color:#fff; cursor:pointer; }
+.hud button:hover{ background:rgba(255,255,255,.16); }
+main{ max-width:1180px; margin:0 auto; padding:22px 20px 60px; }
+.sec-h{ display:flex; align-items:baseline; gap:12px; margin:8px 0 14px; }
+.sec-h h2{ font-size:17px; margin:0; color:var(--green); }
+.sec-h span{ font-size:12.5px; color:var(--sub); }
+.grid{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; }
+.mcard{ background:var(--paper); border:1px solid var(--line); border-radius:8px; padding:14px 15px 12px; break-inside:avoid; }
+.mcard.lv-formed{ border-left:5px solid var(--green); }
+.mcard.lv-half{ border-left:5px solid #2F6B4F; }
+.mcard.lv-start{ border-left:5px solid var(--warm); }
+.mcard.lv-blank{ border-left:5px solid #b9bfb7; }
+.mh{ display:flex; align-items:center; gap:10px; }
+.mno{ font-size:20px; font-weight:800; color:var(--green); line-height:1; min-width:30px; }
+.mt{ flex:1; min-width:0; }
+.mt b{ display:block; font-size:13.5px; }
+.mt em{ display:block; font-style:normal; font-size:11px; color:#8a918a; }
+.badge{ font-size:11.5px; font-weight:700; padding:2px 9px; border-radius:999px; white-space:nowrap; }
+.lv-formed .badge{ background:#0F3D2E; color:#fff; }
+.lv-half .badge{ background:#dcebe2; color:#20503a; }
+.lv-start .badge{ background:#f7e6df; color:#8a3f2a; }
+.lv-blank .badge{ background:#eeebe2; color:#7b837c; }
+.q{ margin:9px 0 4px; font-size:12.5px; color:#33403a; }
+.q b{ color:var(--green); }
+.out{ margin:0 0 10px; font-size:12px; color:var(--sub); }
+.inputs{ display:flex; flex-wrap:wrap; gap:10px 16px; font-size:12.5px; color:#33403a; background:#f7f4ea; border-radius:6px; padding:8px 10px; }
+.inputs label{ display:flex; align-items:center; gap:6px; }
+.inputs input{ width:64px; font-family:inherit; font-size:12.5px; padding:2px 6px; border:1px solid #cfc9ba; border-radius:4px; background:#fff; color:var(--ink); }
+.selfs{ display:flex; flex-wrap:wrap; gap:8px 14px; margin-top:8px; font-size:12px; color:#33403a; }
+.selfs label{ display:flex; align-items:center; gap:5px; }
+.selfs select{ font-family:inherit; font-size:12px; padding:2px 4px; border:1px solid #cfc9ba; border-radius:4px; background:#fff; color:var(--ink); }
+.res{ margin-top:11px; border-top:1px dashed var(--line); padding-top:9px; }
+.res .p{ display:flex; gap:8px; font-size:12.3px; margin-bottom:6px; }
+.res .p b{ flex:0 0 42px; color:var(--green); font-size:11.5px; background:#eef1ea; border-radius:4px; text-align:center; height:20px; line-height:20px; }
+.res .p span{ flex:1; color:#2c352f; }
+.res ul{ margin:6px 0 0; padding-left:18px; font-size:11.8px; color:#5b625c; }
+.res ul li{ margin-bottom:2px; }
+.qgrid{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; }
+.qh{ font-size:11.8px; color:var(--sub); margin:0 0 8px; }
+.qh b{ color:var(--green); }
+.evi{ margin-top:9px; background:#f7f4ea; border-radius:6px; padding:8px 10px; }
+.evi .eh{ font-size:11.6px; color:var(--green); font-weight:700; margin-bottom:6px; }
+.evi .eh em{ font-style:normal; font-weight:400; color:#8a918a; margin-left:6px; }
+.erow{ display:flex; flex-wrap:wrap; align-items:center; gap:4px 7px; font-size:11.8px; color:#33403a; margin-bottom:5px; }
+.erow i{ font-style:normal; color:#9aa199; min-width:13px; }
+.erow input[type=number],.erow input[type=text]{ font-family:inherit; font-size:11.8px; padding:1px 5px; border:1px solid #cfc9ba; border-radius:4px; background:#fff; color:var(--ink); }
+.erow input[type=number]{ width:54px; }
+.erow input.w{ width:170px; }
+.erow input.w2{ width:120px; }
+.erow select{ font-family:inherit; font-size:11.8px; padding:1px 3px; border:1px solid #cfc9ba; border-radius:4px; background:#fff; color:var(--ink); }
+.evi .sum{ color:#7b8a80; }
+.evi .flags{ margin:6px 0 0; padding-left:16px; font-size:11.5px; color:#8a3f2a; }
+.evi .flags li{ margin-bottom:2px; }
+.year{ margin-top:26px; background:var(--paper); border:1px solid var(--line); border-radius:8px; padding:18px 20px 16px; break-inside:avoid; }
+.year h2{ margin:0 0 4px; font-size:17px; color:var(--green); }
+.year .sub{ font-size:12.5px; color:var(--sub); margin-bottom:12px; }
+.yr-badge{ display:inline-block; font-size:12.5px; font-weight:700; padding:3px 12px; border-radius:999px; background:var(--green); color:#fff; margin-bottom:10px; }
+.yr-badge.lv-half{ background:#2F6B4F; }
+.yr-badge.lv-start{ background:var(--warm); }
+.yr-badge.lv-blank{ background:#8a918a; }
+.yr-p{ display:flex; gap:9px; font-size:12.6px; margin-bottom:7px; }
+.yr-p b{ flex:0 0 42px; color:var(--green); background:#eef1ea; border-radius:4px; text-align:center; font-size:11.5px; height:20px; line-height:20px; }
+.three{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; margin:12px 0 6px; }
+.three div{ background:#f7f4ea; border-radius:6px; padding:9px 11px; font-size:12px; color:#33403a; }
+.three div b{ display:block; color:var(--green); font-size:12.5px; margin-bottom:4px; }
+.yr-line{ margin:16px 0 6px; background:#f7f4ea; border-radius:8px; padding:12px 14px; }
+.yr-line > b{ display:block; color:var(--green); font-size:13px; margin-bottom:9px; }
+.lns{ display:flex; flex-wrap:wrap; gap:9px 20px; }
+.lns label{ display:flex; align-items:center; gap:5px; font-size:12.5px; color:#33403a; cursor:pointer; }
+.lns input{ margin:0; accent-color:var(--green); }
+.ln-tip{ margin-top:9px; font-size:11.5px; color:#7b8a80; }
+.yr-adv{ margin:8px 0 0; padding-left:18px; font-size:12.2px; color:#5b625c; }
+.mtab{ width:100%; border-collapse:collapse; margin-top:12px; font-size:12px; }
+.mtab th{ background:#0F3D2E; color:#fff; font-weight:600; padding:6px 8px; text-align:left; }
+.mtab td{ border-bottom:1px solid #eee9dc; padding:6px 8px; vertical-align:top; }
+.mtab .c1{ white-space:nowrap; color:var(--green); font-weight:700; }
+.mtab .c3{ white-space:nowrap; }
+.foot{ max-width:1180px; margin:0 auto; padding:0 20px 40px; font-size:11.5px; color:#8a918a; }
+@media (max-width:860px){ .grid{ grid-template-columns:1fr; } .three{ grid-template-columns:1fr; } }
+@media print{
+  body{ background:#fff; }
+  .hd{ background:#fff; color:var(--ink); padding:0 0 10px; border-bottom:1.5pt solid var(--green); }
+  .hd .brand{ color:var(--green); opacity:1; }
+  .hd .lead{ color:#33403a; }
+  .hud{ display:none !important; }
+  main{ max-width:none; padding:0; }
+  .grid{ grid-template-columns:repeat(2,1fr); gap:8px; }
+  .qgrid{ grid-template-columns:repeat(2,1fr); gap:8px; }
+  .mcard{ padding:8px 9px; }
+  .evi{ break-inside:avoid; }
+  .inputs,.selfs{ display:none !important; }
+  .res{ border-top:1px solid #ddd; }
+  @page{ size:A4 portrait; margin:12mm 10mm; }
+}
+</style>
+</head>
+<body>
+<header class="hd">
+  <div class="brand">2027 生涯探索年历 · 结论分析</div>
+  <h1>月度 / 季度 / 年度结论分析</h1>
+  <p class="lead">填每个月走完的天数、完成的工具卡与三项自评，页面即时给出该月应有的一条结论（数据 / 判断 / 下一步）、结论是否成立、以及该补什么；每满三个月自动汇总出一条季度结论，并给出 R02 季度路线体检的五指标手填位与调整提示；12 个月填完自动汇总成年度结论与「我在哪 / 我能去哪 / 我凭什么去」三问。全部本地计算，不上传数据；填完点「打印 / 存为 PDF」即得一份 A4 结论报告。</p>
+  <div class="hud">
+    <span id="hudMonths">月结论 0/12</span>
+    <span id="hudQuarter">季度 0/4</span>
+    <span id="hudDays">全年 0/365 天</span>
+    <span id="hudLevel">年度判断：待补</span>
+    <button id="btnPrint" type="button">打印 / 存为 PDF</button>
+    <button id="btnCopy" type="button">复制全年结论</button>
+    <button id="btnReset" type="button">清空填写</button>
+  </div>
+</header>
+<main>
+  <div class="sec-h"><h2>逐月结论</h2><span>每个月只出一条结论，写事实、不写评价</span></div>
+  <section class="grid" id="grid"></section>
+  <div class="sec-h"><h2>季度复盘</h2><span>每季末（年历既有季度体检日）做一次路线体检：季度结论由三个月自动汇总，五指标只手填证据</span></div>
+  <section class="qgrid" id="qGrid"></section>
+  <section class="year" id="yearBox"></section>
+</main>
+<div class="foot">
+  <p>口径说明：月度完成度由「走完天数 + 完成工具卡」两个可数项计算，自评为「事实记下 / 判断成形 / 下一步确定」三项各三档。季度分 = 季度月成形比 × 0.5 + 工具卡完成比 × 0.3 + 天完成比 × 0.2（季度月成形比 =（已成形 + 半成形 × 0.5）/ 本季月数）。R02 季度路线体检的五个指标只作手填证据，不参与季度分计算。年度分 = 月成形比 × 0.5 + 卡完成比 × 0.3 + 天完成比 × 0.2。判定均分四档——已成形、半成形、起步、待补。全部分数仅用于自评排序，不作为评价依据。</p>
+  <p>本页为单文件离线页面，不联网、不采集任何信息；填写内容只存在本机浏览器（localStorage）。</p>
+</div>
+<script>
+const DATA = /*__DATA__*/;
+</script>
+<script>
+/*__ENGINE__*/
+</script>
+<script>
+(function(){
+  var KEY = 'ce2027.analysis.v1';
+  var MODELS = CEA.buildModels(DATA);
+  var MONTHS = MODELS.months;
+  var YEAR = MODELS.year;
+  var QS = MODELS.quarters || [];
+  var IND = MODELS.indicators || [];
+  var R02 = MODELS.r02 || null;
+  var state = { months: {}, quarters: {}, line: '' };
+  var grid = document.getElementById('grid');
+  var qGrid = document.getElementById('qGrid');
+  var yearBox = document.getElementById('yearBox');
+
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){}
+  }
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(!raw) return;
+      var o = JSON.parse(raw);
+      if(o && o.months) state.months = o.months;
+      if(o && o.quarters) state.quarters = o.quarters;
+      if(o && o.line) state.line = o.line;
+    }catch(e){}
+  }
+  function getInput(m){
+    var s = state.months[m.month] || {};
+    return {
+      daysDone: s.daysDone == null ? 0 : Number(s.daysDone),
+      cardsDone: s.cardsDone == null ? 0 : Number(s.cardsDone),
+      self: { data: s.data || 'none', judge: s.judge || 'none', next: s.next || 'none' }
+    };
+  }
+  function setInput(m, patch){
+    var cur = state.months[m.month] || { daysDone:0, cardsDone:0, data:'none', judge:'none', next:'none' };
+    for(var k in patch) cur[k] = patch[k];
+    state.months[m.month] = cur;
+  }
+  /* 季度 R02 五指标手填：只存证据，不参与季度分计算 */
+  function getQ(q){
+    var s = state.quarters[q.q] || {};
+    var o = { rate:'', infoA:'', infoB:'', infoC:'', clarity:'', why:'', p1:'none', p2:'none', p3:'none', time:'', adjust:'' };
+    for(var k in o) if(s[k] != null && s[k] !== '') o[k] = s[k];
+    return o;
+  }
+  function setQ(q, patch){
+    var cur = state.quarters[q.q] || {};
+    for(var k in patch) cur[k] = patch[k];
+    state.quarters[q.q] = cur;
+  }
+  function qEvidence(q){
+    var s = state.quarters[q.q] || {};
+    var ev = {};
+    if(s.rate !== '' && s.rate != null) ev.rate = Number(s.rate);
+    if(s.clarity !== '' && s.clarity != null) ev.clarity = Number(s.clarity);
+    if(s.time !== '' && s.time != null) ev.time = Number(s.time);
+    ['p1','p2','p3'].forEach(function(k){ if(s[k] && s[k] !== 'none') ev[k] = s[k]; });
+    return ev;
+  }
+  function qResults(){
+    var rs = allResults();
+    return QS.map(function(q){
+      var idxs = q.months.map(function(m){ return m.month; });
+      var sub = MONTHS.map(function(m, mi){ return { m:m, r:rs[mi] }; })
+        .filter(function(o){ return idxs.indexOf(o.m.month) >= 0; })
+        .map(function(o){ return o.r; });
+      return { q: q, r: CEA.quarterConclusion(q, sub) };
+    });
+  }
+  function el(tag, cls, txt){
+    var n = document.createElement(tag);
+    if(cls) n.className = cls;
+    if(txt != null) n.textContent = txt;
+    return n;
+  }
+
+  function buildCard(m){
+    var art = el('article','mcard');
+    art.setAttribute('data-m', m.month);
+
+    var head = el('div','mh');
+    head.appendChild(el('span','mno', String(m.month).padStart(2,'0')));
+    var mt = el('div','mt');
+    mt.appendChild(el('b', null, m.name + ' · ' + m.title));
+    var meta = '本月 ' + m.dayTotal + ' 天';
+    if(m.cards.length) meta += ' · 工具卡 ' + m.cards.length + ' 张';
+    if(m.tools.length) meta += ' · 图纸 ' + m.tools.join('、');
+    mt.appendChild(el('em', null, meta));
+    head.appendChild(mt);
+    var badge = el('span','badge','待补');
+    head.appendChild(badge);
+    art.appendChild(head);
+
+    var q = el('p','q');
+    q.appendChild(document.createTextNode('本月要回答：'));
+    q.appendChild(el('b', null, m.core_question));
+    art.appendChild(q);
+    if(m.output) art.appendChild(el('p','out','本月应产出：' + m.output));
+
+    var inp = el('div','inputs');
+    var l1 = el('label');
+    l1.appendChild(document.createTextNode('走完天数'));
+    var i1 = document.createElement('input');
+    i1.type = 'number'; i1.min = 0; i1.max = m.dayTotal; i1.step = 1; i1.className = 'in-days';
+    l1.appendChild(i1); l1.appendChild(document.createTextNode('/ ' + m.dayTotal));
+    inp.appendChild(l1);
+
+    if(m.cards.length){
+      var l2 = el('label');
+      l2.appendChild(document.createTextNode('完成工具卡'));
+      var i2 = document.createElement('input');
+      i2.type = 'number'; i2.min = 0; i2.max = m.cards.length; i2.step = 1; i2.className = 'in-cards';
+      l2.appendChild(i2); l2.appendChild(document.createTextNode('/ ' + m.cards.length));
+      inp.appendChild(l2);
+    }
+    art.appendChild(inp);
+
+    var selfs = el('div','selfs');
+    [['data','事实记下'],['judge','判断成形'],['next','下一步确定']].forEach(function(pair){
+      var lab = el('label');
+      lab.appendChild(document.createTextNode(pair[1]));
+      var sel = document.createElement('select');
+      sel.className = 'in-self'; sel.setAttribute('data-k', pair[0]);
+      [['none','未做'],['part','部分'],['done','已做到']].forEach(function(o){
+        var op = document.createElement('option');
+        op.value = o[0]; op.textContent = o[1];
+        sel.appendChild(op);
+      });
+      lab.appendChild(sel);
+      selfs.appendChild(lab);
+    });
+    art.appendChild(selfs);
+
+    var res = el('div','res');
+    art.appendChild(res);
+
+    var cur = getInput(m);
+    i1.value = cur.daysDone;
+    if(i2) i2.value = cur.cardsDone;
+    selfs.querySelectorAll('select').forEach(function(sel){
+      sel.value = cur.self[sel.getAttribute('data-k')] || 'none';
+    });
+
+    function refresh(){
+      var d = Math.max(0, Math.min(m.dayTotal, Number(i1.value) || 0));
+      var c = i2 ? Math.max(0, Math.min(m.cards.length, Number(i2.value) || 0)) : 0;
+      var self = {};
+      selfs.querySelectorAll('select').forEach(function(sel){ self[sel.getAttribute('data-k')] = sel.value; });
+      setInput(m, { daysDone:d, cardsDone:c, data:self.data, judge:self.judge, next:self.next });
+      renderMonth(art, m, { daysDone:d, cardsDone:c, self:self });
+      save();
+      renderYear();
+    }
+    art.addEventListener('input', refresh);
+    art.addEventListener('change', refresh);
+
+    renderMonth(art, m, cur);
+    return art;
+  }
+
+  function renderMonth(art, m, input){
+    var r = CEA.monthConclusion(m, input);
+    art.className = 'mcard lv-' + r.level;
+    art.querySelector('.badge').textContent = r.levelLabel;
+    var res = art.querySelector('.res');
+    res.innerHTML = '';
+    r.paras.forEach(function(p){
+      var row = el('div','p');
+      row.appendChild(el('b', null, p.k));
+      row.appendChild(el('span', null, p.text));
+      res.appendChild(row);
+    });
+    var ul = el('ul');
+    r.advice.forEach(function(a){ ul.appendChild(el('li', null, a)); });
+    res.appendChild(ul);
+  }
+
+  /* ---------- 季度复盘区：季度结论 + R02 五指标手填 ---------- */
+  function numField(v, min, max){
+    var i = document.createElement('input');
+    i.type = 'number'; i.min = min; i.max = max; i.step = 1;
+    if(v !== '' && v != null) i.value = v;
+    return i;
+  }
+  function txtField(v, cls, ph){
+    var i = document.createElement('input');
+    i.type = 'text';
+    if(cls) i.className = cls;
+    if(ph) i.placeholder = ph;
+    if(v) i.value = v;
+    return i;
+  }
+  function indOf(k){
+    return IND.filter(function(x){ return x.idx === k; })[0] || null;
+  }
+  function indLabel(k, dflt){
+    var it = indOf(k);
+    if(!it) return dflt;
+    return it.label + (it.unit ? '（' + it.unit + '）' : '');
+  }
+
+  function buildQCard(q, qi){
+    var art = el('article','mcard qcard');
+    art.setAttribute('data-q', q.q);
+
+    var head = el('div','mh');
+    head.appendChild(el('span','mno','Q' + q.q));
+    var mt = el('div','mt');
+    mt.appendChild(el('b', null, q.name + ' · ' + q.range));
+    var meta = '本季 ' + q.dayTotal + ' 天 · 工具卡 ' + q.cardTotal + ' 张';
+    if(q.anchor) meta += ' · 体检日 ' + q.anchor.md + (q.anchor.weekday ? ' ' + q.anchor.weekday : '');
+    mt.appendChild(el('em', null, meta));
+    head.appendChild(mt);
+    var badge = el('span','badge','待补');
+    head.appendChild(badge);
+    art.appendChild(head);
+
+    var qp = el('p','q');
+    qp.appendChild(document.createTextNode('本季要回答：'));
+    qp.appendChild(el('b', null, q.core_question || '本季路线是否还成立'));
+    art.appendChild(qp);
+    if(q.output) art.appendChild(el('p','out','季末应产出：' + q.output));
+    art.appendChild(el('div','qh','季度分 = 月成形比 × 0.5 + 卡完成比 × 0.3 + 天完成比 × 0.2（四档同上；下面五指标只作证据，不计分）'));
+
+    var res = el('div','res');
+    art.appendChild(res);
+
+    var cur = getQ(q);
+    var evi = el('div','evi');
+    var eh = el('div','eh','R02 季度路线体检 · 五指标');
+    if(R02 && (R02.minutes || R02.materials)){
+      eh.appendChild(document.createTextNode('（' + (R02.minutes ? R02.minutes + ' 分钟' : '') + (R02.materials ? ' / ' + R02.materials : '') + '）'));
+    }
+    eh.appendChild(el('em', null, '手填证据，不计分'));
+    evi.appendChild(eh);
+
+    var fields = {};
+
+    var r1 = el('div','erow');
+    r1.appendChild(el('i', null, '①'));
+    r1.appendChild(document.createTextNode(indLabel(1, '本季计划动作完成率（%）') + ' '));
+    fields.rate = numField(cur.rate, 0, 100);
+    r1.appendChild(fields.rate);
+    r1.appendChild(document.createTextNode('%'));
+    evi.appendChild(r1);
+
+    var subs = ['访谈','招聘','政策'];
+    var it2 = indOf(2);
+    if(it2 && it2.detail){
+      var mm = String(it2.detail).match(/（(.+?)）/);
+      if(mm){
+        var ss = mm[1].split('、').map(function(s){ return s.replace(/各自计数.*$/, '').trim(); }).filter(Boolean);
+        if(ss.length) subs = ss;
+      }
+    }
+    var r2 = el('div','erow');
+    r2.appendChild(el('i', null, '②'));
+    r2.appendChild(document.createTextNode(indLabel(2, '新收集到的有效信息条数') + ' '));
+    ['infoA','infoB','infoC'].forEach(function(k, i){
+      r2.appendChild(document.createTextNode(subs[i] || ('来源' + (i + 1))));
+      fields[k] = numField(cur[k], 0, 999);
+      r2.appendChild(fields[k]);
+    });
+    var sumSpan = el('span','sum','');
+    r2.appendChild(sumSpan);
+    evi.appendChild(r2);
+
+    var r3 = el('div','erow');
+    r3.appendChild(el('i', null, '③'));
+    r3.appendChild(document.createTextNode(indLabel(3, '决策清晰度自评（分）') + ' '));
+    fields.clarity = numField(cur.clarity, 1, 10);
+    r3.appendChild(fields.clarity);
+    r3.appendChild(document.createTextNode('/ 10，原因'));
+    fields.why = txtField(cur.why, 'w', '比上季升或降的原因（只写事实）');
+    r3.appendChild(fields.why);
+    evi.appendChild(r3);
+
+    var r4 = el('div','erow');
+    r4.appendChild(el('i', null, '④'));
+    r4.appendChild(document.createTextNode('主选路径 3 个前提 '));
+    ['p1','p2','p3'].forEach(function(k, i){
+      var sel = document.createElement('select');
+      sel.setAttribute('data-k', k);
+      [['none','未检'],['yes','成立'],['part','存疑'],['no','不成立']].forEach(function(o){
+        var op = document.createElement('option');
+        op.value = o[0]; op.textContent = o[1];
+        sel.appendChild(op);
+      });
+      sel.value = cur[k] || 'none';
+      fields[k] = sel;
+      r4.appendChild(document.createTextNode('前提' + (i + 1)));
+      r4.appendChild(sel);
+    });
+    evi.appendChild(r4);
+
+    var r5 = el('div','erow');
+    r5.appendChild(el('i', null, '⑤'));
+    r5.appendChild(document.createTextNode(indLabel(5, '投入时间分配 · 生涯探索时间占比（%）') + ' '));
+    fields.time = numField(cur.time, 0, 100);
+    r5.appendChild(fields.time);
+    r5.appendChild(document.createTextNode('%'));
+    evi.appendChild(r5);
+
+    var r6 = el('div','erow');
+    r6.appendChild(el('i', null, '⑥'));
+    r6.appendChild(document.createTextNode('下季调整项 '));
+    fields.adjust = txtField(cur.adjust, 'w', '做什么、什么时候之前（任一指标明显恶化时写）');
+    r6.appendChild(fields.adjust);
+    evi.appendChild(r6);
+
+    var flags = el('ul','flags');
+    evi.appendChild(flags);
+    art.appendChild(evi);
+
+    function paintFlags(){
+      var ev = qEvidence(q);
+      var prev = qi > 0 ? qEvidence(QS[qi - 1]) : {};
+      var fs = CEA.quarterFlags(q, ev, prev);
+      flags.innerHTML = '';
+      fs.forEach(function(t){ flags.appendChild(el('li', null, t)); });
+      var s = state.quarters[q.q] || {};
+      var tot = 0;
+      ['infoA','infoB','infoC'].forEach(function(k){ tot += Number(s[k]) || 0; });
+      sumSpan.textContent = '总计 ' + tot + ' 条';
+    }
+    function onChange(){
+      var patch = {};
+      for(var k in fields) patch[k] = fields[k].value;
+      setQ(q, patch);
+      save();
+      paintFlags();
+    }
+    evi.addEventListener('input', onChange);
+    evi.addEventListener('change', onChange);
+    paintFlags();
+
+    return art;
+  }
+
+  function paintQ(art, q, r){
+    art.className = 'mcard qcard lv-' + r.level;
+    art.querySelector('.badge').textContent = r.levelLabel;
+    var res = art.querySelector('.res');
+    res.innerHTML = '';
+    r.paras.forEach(function(p){
+      var row = el('div','p');
+      row.appendChild(el('b', null, p.k));
+      row.appendChild(el('span', null, p.text));
+      res.appendChild(row);
+    });
+    var ul = el('ul');
+    r.advice.forEach(function(a){ ul.appendChild(el('li', null, a)); });
+    res.appendChild(ul);
+  }
+
+  function renderQuarters(){
+    if(!qGrid) return;
+    if(qGrid.children.length !== QS.length){
+      qGrid.innerHTML = '';
+      QS.forEach(function(q, i){ qGrid.appendChild(buildQCard(q, i)); });
+    }
+    var pack = qResults();
+    pack.forEach(function(o, i){
+      var art = qGrid.children[i];
+      if(art) paintQ(art, o.q, o.r);
+    });
+    var formed = pack.filter(function(o){ return o.r.level === 'formed'; }).length;
+    var half = pack.filter(function(o){ return o.r.level === 'half'; }).length;
+    var hq = document.getElementById('hudQuarter');
+    if(hq) hq.textContent = '季度 ' + formed + '/' + QS.length + ' 已成形 · 半成形 ' + half;
+  }
+
+  function allResults(){
+    return MONTHS.map(function(m){
+      var inp = getInput(m);
+      return CEA.monthConclusion(m, inp);
+    });
+  }
+
+  function renderYear(){
+    var results = allResults();
+    var yr = CEA.yearConclusion(YEAR, results.map(function(r){ return { result:r }; }));
+    var sumDays = results.reduce(function(s,r){ return s + r.daysDone; }, 0);
+    var formed = results.filter(function(r){ return r.level === 'formed'; }).length;
+
+    document.getElementById('hudMonths').textContent = '月结论 ' + formed + '/' + YEAR.monthTotal + '（已成形）';
+    document.getElementById('hudDays').textContent = '全年 ' + sumDays + '/' + YEAR.dayTotal + ' 天';
+    document.getElementById('hudLevel').textContent = '年度判断：' + yr.levelLabel;
+
+    yearBox.innerHTML = '';
+    var h2 = el('h2', null, '年度结论分析');
+    yearBox.appendChild(h2);
+    yearBox.appendChild(el('div','sub','由 12 个月度结论自动汇总；改任一个月，这里同步更新。'));
+    yearBox.appendChild(el('div','yr-badge lv-' + yr.level, '年度判断：' + yr.levelLabel));
+    yr.paras.forEach(function(p){
+      var row = el('div','yr-p');
+      row.appendChild(el('b', null, p.k));
+      row.appendChild(el('span', null, p.text));
+      yearBox.appendChild(row);
+    });
+    var three = el('div','three');
+    yr.three.forEach(function(t){
+      var d = el('div');
+      d.appendChild(el('b', null, t.k));
+      d.appendChild(document.createTextNode(t.text));
+      three.appendChild(d);
+    });
+    yearBox.appendChild(three);
+
+    var adv = el('ul','yr-adv');
+    yr.advice.forEach(function(a){ adv.appendChild(el('li', null, a)); });
+    yearBox.appendChild(adv);
+
+    var tb = el('table','mtab');
+    var thead = el('thead');
+    var tr = el('tr');
+    ['月份','本月核心问题','月结论'].forEach(function(t){ tr.appendChild(el('th', null, t)); });
+    thead.appendChild(tr); tb.appendChild(thead);
+    var tbody = el('tbody');
+    yr.monthRows.forEach(function(r){
+      var row = el('tr');
+      row.appendChild(el('td','c1', String(r.month).padStart(2,'0') + ' ' + r.name));
+      row.appendChild(el('td', null, r.core_question));
+      row.appendChild(el('td','c3', r.levelLabel));
+      tbody.appendChild(row);
+    });
+    tb.appendChild(tbody);
+    yearBox.appendChild(tb);
+
+    var lnBox = el('div','yr-line');
+    lnBox.appendChild(el('b', null, '本年主线（只勾一条）'));
+    var lns = el('div','lns');
+    Object.keys(YEAR.lineName || {}).forEach(function(k){
+      var lab = el('label');
+      var rd = document.createElement('input');
+      rd.type = 'radio'; rd.name = 'ceLine'; rd.value = k;
+      rd.checked = state.line === k;
+      rd.addEventListener('change', function(){
+        state.line = k; save();
+        var tip = lnBox.querySelector('.ln-tip');
+        if(tip) tip.textContent = '已选主线：' + k + ' ' + (YEAR.lineName[k] || '') + '。年度结论里只写这一条，其余四条不比较优劣。';
+        renderYear();
+      });
+      lab.appendChild(rd);
+      lab.appendChild(document.createTextNode(' ' + k + ' ' + (YEAR.lineName[k] || '')));
+      lns.appendChild(lab);
+    });
+    lnBox.appendChild(lns);
+    lnBox.appendChild(el('div','ln-tip', state.line
+      ? ('已选主线：' + state.line + ' ' + (YEAR.lineName[state.line] || '') + '。年度结论里只写这一条，其余四条不比较优劣。')
+      : '五条主线不做优劣比较，只选你现在最想验证的那一条。'));
+    yearBox.appendChild(lnBox);
+    renderQuarters();
+    return { yr: yr, results: results };
+  }
+
+  function plainText(){
+    var pack = renderYear();
+    var lines = ['2027 生涯探索年历 · 结论分析', ''];
+    pack.results.forEach(function(r){
+      lines.push('【' + r.name + '】' + r.levelLabel);
+      r.paras.forEach(function(p){ lines.push('· ' + p.k + '：' + p.text); });
+      lines.push('');
+    });
+    qResults().forEach(function(o){
+      lines.push('【' + o.q.name + ' · 季度复盘】' + o.r.levelLabel);
+      o.r.paras.forEach(function(p){ lines.push('· ' + p.k + '：' + p.text); });
+      lines.push('');
+    });
+    lines.push('【年度结论】' + pack.yr.levelLabel);
+    pack.yr.paras.forEach(function(p){ lines.push('· ' + p.k + '：' + p.text); });
+    pack.yr.three.forEach(function(t){ lines.push('· ' + t.k + '：' + t.text); });
+    lines.push('· 主线：' + (state.line ? (state.line + ' ' + (YEAR.lineName[state.line] || '')) : '未选（五条只勾一条）'));
+    lines.push('');
+    lines.push('建议：');
+    pack.yr.advice.forEach(function(a){ lines.push('- ' + a); });
+    return lines.join('\n');
+  }
+
+  function boot(){
+    load();
+    MONTHS.forEach(function(m){ grid.appendChild(buildCard(m)); });
+    qGrid.innerHTML = '';
+    renderQuarters();
+    renderYear();
+  }
+
+  document.getElementById('btnPrint').addEventListener('click', function(){ window.print(); });
+  document.getElementById('btnReset').addEventListener('click', function(){
+    if(!confirm('清空本页所有填写（只影响本机浏览器）？')) return;
+    state = { months: {}, quarters: {}, line: '' };
+    save();
+    grid.innerHTML = '';
+    MONTHS.forEach(function(m){ grid.appendChild(buildCard(m)); });
+    qGrid.innerHTML = '';
+    renderQuarters();
+    renderYear();
+  });
+  document.getElementById('btnCopy').addEventListener('click', function(){
+    var txt = plainText();
+    function done(ok){
+      var b = document.getElementById('btnCopy');
+      b.textContent = ok ? '已复制' : '复制失败，请手动选择';
+      setTimeout(function(){ b.textContent = '复制全年结论'; }, 1800);
+    }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(txt).then(function(){ done(true); }, function(){ done(false); });
+    } else {
+      var ta = document.createElement('textarea');
+      ta.value = txt; document.body.appendChild(ta); ta.select();
+      var ok = false;
+      try{ ok = document.execCommand('copy'); }catch(e){}
+      document.body.removeChild(ta);
+      done(ok);
+    }
+  });
+
+  boot();
+})();
+</script>
+</body>
+</html>
